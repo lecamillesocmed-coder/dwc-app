@@ -1,0 +1,1097 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#320f2c">
+<link rel="manifest" href="/manifest.json">
+<title>DWC Magazine</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plum:#320f2c;
+  --plum-mid:#5c2d4e;
+  --gold:#b8965a;
+  --gold-light:#d4b07a;
+  --cream:#f9f4ee;
+  --cream-dark:#ede5d8;
+  --text-dark:#1a0a18;
+  --text-mid:#5a3a55;
+  --white:#ffffff;
+  --max-w:480px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:16px;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--text-dark);
+  line-height:1.6;
+  -webkit-text-size-adjust:100%;
+  display:flex;
+  justify-content:center;
+}
+.app{width:100%;max-width:var(--max-w);background:var(--cream);min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,0.08);}
+
+.masthead{background:var(--plum);padding:16px 20px 12px;text-align:center;position:sticky;top:0;z-index:50;}
+.masthead-word{font-family:'Libre Bodoni',serif;font-weight:700;font-size:1.3rem;color:var(--white);letter-spacing:0.03em;}
+.masthead-tag{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);margin-top:3px;}
+.masthead-date{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(249,244,238,0.55);margin-top:3px;}
+
+.feed{padding:0 0 40px;}
+.card{background:var(--white);border-bottom:1px solid var(--cream-dark);}
+.card-eyebrow{padding:16px 20px 0;font-size:0.66rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.card-title{padding:6px 20px 10px;font-family:'Playfair Display',serif;font-size:1.25rem;line-height:1.32;color:var(--plum);font-weight:600;}
+.card-image-wrap{width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--cream-dark);}
+.card-image-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.card-caption{padding:14px 20px 2px;font-size:0.92rem;font-style:italic;color:var(--text-mid);line-height:1.55;}
+.card-byline{padding:2px 20px 6px;font-size:0.74rem;letter-spacing:0.04em;color:var(--text-mid);font-weight:500;}
+
+.pull-affordance{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.pull-label{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--plum-mid);font-weight:500;}
+.pull-chevron{width:18px;height:18px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform 0.3s ease;animation:bob 1.8s ease-in-out infinite;}
+.card.open .pull-chevron{transform:rotate(225deg);animation:none;}
+@keyframes bob{0%,100%{transform:rotate(45deg) translateY(0);}50%{transform:rotate(45deg) translateY(4px);}}
+
+.card-body{max-height:0;overflow:hidden;transition:max-height 0.45s ease;padding:0 20px;}
+.card.open .card-body{padding-bottom:28px;}
+.card-body-inner p{font-size:0.96rem;color:var(--text-dark);line-height:1.85;margin-bottom:16px;font-weight:400;}
+.card-body-inner h4{font-family:'Playfair Display',serif;font-style:italic;font-size:1.02rem;color:var(--plum);margin:22px 0 8px;}
+.card-body-inner blockquote{border-left:3px solid var(--gold);padding:12px 16px;margin:20px 0;background:var(--cream);}
+.card-body-inner blockquote p{font-family:'Playfair Display',serif;font-style:italic;color:var(--plum);margin:0;font-size:0.96rem;}
+.card-body-inner ul{margin:0 0 16px 18px;}
+.card-body-inner li{margin-bottom:6px;font-size:0.94rem;line-height:1.7;}
+
+.author-block{display:flex;gap:12px;align-items:flex-start;margin-top:24px;padding-top:20px;border-top:1px solid var(--cream-dark);}
+.author-name{font-weight:700;font-size:0.88rem;color:var(--plum);}
+.author-role{font-size:0.76rem;color:var(--text-mid);margin-bottom:4px;}
+.author-bio{font-size:0.82rem;color:var(--text-mid);line-height:1.6;}
+
+.moon-month-label{font-size:0.64rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin:18px 0 10px;font-weight:600;}
+.moon-mini{border:1px solid var(--cream-dark);border-radius:6px;overflow:hidden;margin-bottom:12px;}
+.moon-mini img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;}
+.moon-mini-header{padding:10px 14px;text-align:center;border-bottom:1px solid var(--cream-dark);}
+.moon-mini-date{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);}
+.moon-mini-phase{font-weight:700;font-size:0.92rem;text-transform:lowercase;}
+.moon-mini-tag{font-size:0.76rem;font-style:italic;color:var(--text-mid);}
+.moon-mini-text{padding:10px 14px;font-size:0.82rem;line-height:1.6;}
+
+.podcast-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--cream-dark);}
+.podcast-tile{background:var(--white);padding:16px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;}
+.podcast-tile img{width:64px;height:64px;border-radius:8px;object-fit:cover;}
+.podcast-name{font-family:'Playfair Display',serif;font-size:0.88rem;color:var(--plum);line-height:1.25;}
+.podcast-host{font-size:0.7rem;color:var(--text-mid);}
+.podcast-link{font-size:0.66rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-weight:600;margin-top:2px;}
+
+.nominee-card{border:1px solid var(--cream-dark);border-radius:8px;padding:16px;margin-bottom:12px;display:flex;align-items:flex-start;gap:12px;}
+.nominee-photo-wrap{width:48px !important;height:48px !important;min-width:48px;max-width:48px;flex:0 0 48px;border-radius:6px;overflow:hidden;border:1.5px solid var(--gold);background:var(--cream-dark);}
+.nominee-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.nominee-name{font-family:'Playfair Display',serif;font-size:0.92rem;color:var(--plum);line-height:1.2;}
+.nominee-cat{font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:2px 0 6px;}
+.nominee-bio{font-size:0.78rem;color:var(--text-mid);line-height:1.55;margin-bottom:10px;}
+.nominee-footer{display:flex;align-items:center;justify-content:space-between;}
+.nominee-link{font-size:0.74rem;color:var(--plum-mid);text-decoration:none;font-weight:600;}
+.vote-btn{display:flex;align-items:center;gap:5px;font-size:0.74rem;font-weight:600;padding:5px 11px;border-radius:16px;border:1px solid var(--cream-dark);background:var(--white);color:var(--text-mid);cursor:pointer;}
+.vote-btn.voted{background:var(--plum);color:var(--white);border-color:var(--plum);}
+.vote-btn svg{width:12px;height:12px;}
+
+.flip-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 6px;}
+.flip-card{min-height:150px;perspective:1000px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.flip-card-inner{position:relative;width:100%;height:100%;transition:transform 0.5s;transform-style:preserve-3d;}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg);}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px;}
+.flip-front{background:var(--white);border:1.5px solid var(--gold);}
+.flip-back{background:var(--plum);transform:rotateY(180deg);}
+.flip-face p{font-size:0.88rem;line-height:1.45;font-weight:500;}
+.flip-front p{color:var(--text-dark) !important;}
+.flip-back p{color:#ffffff !important;}
+.flip-tap{font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-top:8px;}
+
+.checklist{margin:14px 0 0;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--cream-dark);cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.check-box{width:19px;height:19px;border:1.5px solid var(--gold);border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:0.68rem;color:var(--white);transition:background 0.15s;}
+.check-item.checked .check-box{background:var(--gold);}
+.check-text{font-size:0.88rem;line-height:1.5;color:var(--text-dark);}
+.check-item.checked .check-text{text-decoration:line-through;color:var(--text-mid);}
+
+.retro-transition{font-style:italic;color:var(--plum-mid);font-size:0.9rem;margin:8px 0 4px;}
+
+.book-block{border-top:1px solid var(--cream-dark);padding:18px 0;}
+.book-block:first-child{border-top:none;padding-top:0;}
+.book-tag{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px;}
+.book-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--plum);margin-bottom:2px;}
+.book-author{font-size:0.78rem;font-style:italic;color:var(--text-mid);margin-bottom:8px;}
+.book-buy{display:inline-block;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;color:var(--plum);text-decoration:none;border:1px solid var(--plum-mid);padding:5px 12px;border-radius:14px;margin:4px 6px 0 0;}
+.book-cover{width:72px;height:auto;display:block;float:left;margin:0 14px 8px 0;border-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,0.18);}
+.book-block::after{content:'';display:block;clear:both;}
+
+.footer{background:var(--plum);padding:48px 24px 36px;color:var(--cream);}
+.footer-word{font-family:'Libre Bodoni',serif;font-weight:700;font-size:2rem;color:var(--gold-light);letter-spacing:0.03em;}
+.footer-tag{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(212,176,122,0.65);margin-top:6px;margin-bottom:18px;}
+.footer-desc{font-size:0.86rem;color:rgba(249,244,238,0.65);line-height:1.7;margin-bottom:24px;max-width:420px;}
+.footer-site-text{font-size:0.8rem;color:var(--gold-light);font-weight:600;letter-spacing:0.04em;margin-bottom:30px;}
+.footer-label{font-size:0.64rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px;font-weight:600;}
+.footer-sub{font-size:0.82rem;color:rgba(249,244,238,0.55);margin-bottom:14px;}
+.footer-signup-box{background:var(--white);border-radius:4px;overflow:hidden;margin-bottom:32px;max-width:420px;}
+.footer-signup-box iframe{width:100%;height:340px;border:none;display:block;}
+.footer-divider{border:none;border-top:1px solid rgba(184,150,90,0.18);margin:0 0 24px;}
+.footer-bottom-row{display:flex;flex-direction:column;gap:16px;margin-bottom:18px;}
+.footer-address{font-size:0.78rem;color:rgba(249,244,238,0.45);line-height:1.8;}
+.footer-address strong{display:block;font-weight:600;color:rgba(249,244,238,0.6);margin-bottom:4px;}
+.footer-copy{font-size:0.72rem;color:rgba(249,244,238,0.3);letter-spacing:0.04em;}
+.footer-legal{display:flex;gap:18px;margin-bottom:4px;flex-wrap:wrap;}
+.footer-legal button{background:none;border:none;font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold-light);text-decoration:underline;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;}
+
+.privacy-overlay{display:none;position:fixed;inset:0;background:rgba(26,10,24,0.55);z-index:500;align-items:flex-end;justify-content:center;}
+.privacy-overlay.open{display:flex;}
+.privacy-sheet{background:var(--cream);width:100%;max-width:var(--max-w);max-height:85vh;overflow-y:auto;border-radius:16px 16px 0 0;padding:28px 22px 36px;position:relative;}
+.privacy-close{position:sticky;top:0;float:right;background:var(--plum);color:var(--white);border:none;width:30px;height:30px;border-radius:50%;font-size:1rem;cursor:pointer;margin-bottom:8px;}
+.privacy-sheet h1{font-family:'Libre Bodoni',serif;font-size:1.5rem;color:var(--plum);margin-bottom:6px;clear:both;}
+.privacy-sheet h2{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--plum-mid);margin:20px 0 8px;}
+.privacy-sheet p{font-size:0.86rem;color:var(--text-dark);line-height:1.7;margin-bottom:10px;}
+.privacy-sheet a{color:var(--gold);}
+.privacy-meta{font-size:0.74rem;color:var(--text-mid);margin-bottom:18px;}
+
+.report-overlay{display:none;position:fixed;inset:0;background:rgba(26,10,24,0.55);z-index:500;align-items:flex-end;justify-content:center;}
+.report-overlay.open{display:flex;}
+.report-sheet{background:var(--cream);width:100%;max-width:var(--max-w);max-height:85vh;overflow-y:auto;border-radius:16px 16px 0 0;padding:28px 22px 36px;position:relative;}
+.report-sheet h1{font-family:'Libre Bodoni',serif;font-size:1.3rem;color:var(--plum);margin-bottom:10px;clear:both;}
+.report-sheet p{font-size:0.86rem;color:var(--text-dark);line-height:1.7;margin-bottom:14px;}
+.report-sheet label{font-size:0.78rem;font-weight:600;color:var(--plum-mid);display:block;margin-bottom:6px;}
+.report-sheet textarea, .report-sheet input{width:100%;border:1px solid var(--cream-dark);border-radius:6px;padding:10px;font-family:'DM Sans',sans-serif;font-size:0.86rem;margin-bottom:14px;background:var(--white);}
+.report-sheet textarea{min-height:100px;resize:vertical;}
+.report-submit{display:inline-block;background:var(--plum);color:var(--white);border:none;padding:10px 22px;border-radius:18px;font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <div class="masthead">
+    <div class="masthead-word">DWC</div>
+    <div class="masthead-tag">Strong Women, Strong Voices</div>
+    <div class="masthead-date" id="mastheadDate"></div>
+  </div>
+
+  <div class="feed" id="feed"></div>
+
+  <div class="footer">
+    <div class="footer-word">DWC</div>
+    <div class="footer-tag">Strong Women · Strong Voices</div>
+    <p class="footer-desc">A weekly digital magazine for women — celebrating courage, community, and the stories that don't get told anywhere else. Published every Tuesday. Read in 106 countries.</p>
+
+    <p class="footer-site-text">dwcmagazine.com</p>
+
+    <div class="footer-label">Never Miss an Issue</div>
+    <p class="footer-sub">Every Tuesday, in your inbox.</p>
+    <div class="footer-signup-box">
+      <iframe src="https://cac1eeb9.sibforms.com/serve/MUIFAP3XRuiNWq8Igf26qucPkWGy77YjfgEA-EuKRmc-qNHv_zvZSdHNs5DW52_gR1h5DJVBatPD8R9wkcTB2tx4mONwRF3m63QLcufbSAKEbv7rfln4A4VclGXzhmBz9eBt_jKFJ2cWHL16L0MXVdNR6amCnQEK9xIkdzik5hxtuxr1CGFksPBNkm421WaAI9p5e_C5W6RaRTrP" title="Newsletter signup"></iframe>
+    </div>
+
+    <hr class="footer-divider">
+
+    <div class="footer-bottom-row">
+      <div class="footer-address">
+        Powered by Defiant Women's Resources · England &amp; Wales 16925908<br>
+        128 City Road, London EC1V 2NX, United Kingdom
+      </div>
+      <div class="footer-copy">© 2026 DWC Magazine. All rights reserved.</div>
+    </div>
+
+    <div class="footer-legal">
+      <button onclick="document.getElementById('privacyOverlay').classList.add('open')">Privacy Policy</button>
+      <button onclick="document.getElementById('reportOverlay').classList.add('open')">Report a Concern</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="privacy-overlay" id="privacyOverlay">
+  <div class="privacy-sheet">
+    <button class="privacy-close" onclick="document.getElementById('privacyOverlay').classList.remove('open')">✕</button>
+    <h1>Privacy Policy</h1>
+    <p class="privacy-meta">DWC Magazine App — Last updated June 2026</p>
+    <p>DWC Magazine is published by Defiant Women's Resources Ltd (Company No. 16925908), 128 City Road, London EC1V 2NX. This policy explains what information the DWC Magazine app collects and how it is used.</p>
+    <h2>What we collect</h2>
+    <p>The app stores reader reactions, points earned through engagement, and votes cast in features such as the Content Creator Awards. This data is stored in Firebase Realtime Database, hosted by Google, in the Europe West region.</p>
+    <p>If you upload an image — for example, to the DWC Community platform — it is stored via Cloudinary, a third-party image hosting service.</p>
+    <p>We do not collect your name, email address, or location through the app unless you choose to provide it directly, such as when submitting a comment, nomination, or report.</p>
+    <h2>What we don't do</h2>
+    <p>The app carries no advertising and uses no third-party tracking or analytics SDKs. We do not sell or share data with advertisers.</p>
+    <h2>Keeping the app safe</h2>
+    <p>Anyone can report content or another user that they believe is inappropriate or in breach of our community standards, using the "Report a Concern" button found alongside this policy. Reports are sent directly to our editorial team by email and are not stored or shared with any third party.</p>
+    <p>We aim to review and act on reports of objectionable content or abusive user behaviour within 24 hours. Action may include removing content, removing a user's ability to post, or — where appropriate — blocking that user from the platform.</p>
+    <h2>Offline storage</h2>
+    <p>The app caches pages on your device so content loads when you're offline. This cached data stays on your device and is not transmitted anywhere.</p>
+    <h2>Children's privacy</h2>
+    <p>DWC Magazine is not directed at children and is not intended for users under 16.</p>
+    <h2>Your rights</h2>
+    <p>You can request deletion of any data linked to your activity by contacting us. As most data is anonymous (reactions, points), there is rarely a personal identifier to remove, but we will act on any specific request.</p>
+    <h2>Contact</h2>
+    <p>Questions about this policy can be sent to <a href="mailto:camille@dwcmagazine.com">camille@dwcmagazine.com</a>.</p>
+    <h2>Changes to this policy</h2>
+    <p>We may update this policy as the app evolves. Material changes will be reflected on this page with an updated date.</p>
+  </div>
+</div>
+
+<div class="report-overlay" id="reportOverlay">
+  <div class="report-sheet">
+    <button class="privacy-close" onclick="document.getElementById('reportOverlay').classList.remove('open')">✕</button>
+    <h1>Report a Concern</h1>
+    <p>Tell us what you've seen and we'll look into it. Reports go straight to our editorial team and we aim to act within 24 hours.</p>
+    <label for="reportWhat">What are you reporting?</label>
+    <input type="text" id="reportWhat" placeholder="e.g. a comment, a user, a nominee entry">
+    <label for="reportDetails">Details</label>
+    <textarea id="reportDetails" placeholder="Tell us what happened"></textarea>
+    <label for="reportEmail">Your email (optional, if you'd like a reply)</label>
+    <input type="email" id="reportEmail" placeholder="you@example.com">
+    <button class="report-submit" onclick="DWCReport.submit()">Send Report</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+// Auto-updating date banner — "Friday, 26 June" style, device clock, no network call
+(function(){
+  var el = document.getElementById('mastheadDate');
+  if(!el) return;
+  function renderDate(){
+    var d = new Date();
+    var weekday = d.toLocaleDateString('en-GB', {weekday:'long'});
+    var day = d.getDate();
+    var month = d.toLocaleDateString('en-GB', {month:'long'});
+    el.textContent = weekday + ', ' + day + ' ' + month;
+  }
+  renderDate();
+  // Re-check at the top of every hour in case the app stays open past midnight
+  setInterval(renderDate, 60 * 60 * 1000);
+})();
+
+// Register the service worker so the app is installable (PWA requirement).
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch((err) => {
+      console.warn('Service worker registration failed:', err);
+    });
+  });
+}
+
+window.DWCReport = {
+  submit: function(){
+    var what = document.getElementById('reportWhat').value.trim();
+    var details = document.getElementById('reportDetails').value.trim();
+    var email = document.getElementById('reportEmail').value.trim();
+    if(!what && !details){
+      alert('Please add a few details before sending.');
+      return;
+    }
+    var subject = encodeURIComponent('DWC App Report: ' + (what || 'Concern'));
+    var body = encodeURIComponent(
+      'What is being reported: ' + (what || '—') + '\n\n' +
+      'Details: ' + (details || '—') + '\n\n' +
+      'Reply-to: ' + (email || '—')
+    );
+    window.location.href = 'mailto:camille@dwcmagazine.com?subject=' + subject + '&body=' + body;
+    document.getElementById('reportOverlay').classList.remove('open');
+  }
+};
+
+const ITEMS = [
+
+{
+  type:'article',
+  eyebrow:'Cornerstone Partner · Julie Hayes',
+  title:"Get in the F*cking Water, Julie",
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/DWC_Magazine_Covers_1080_Jan_Feb_March_2026_59.png?v=1776607668',
+  caption:'On ageing, boundaries, and the small acts of bravery that keep you feeling like you.',
+  byline:'Julie Hayes', keepByline:false,
+  body:`
+    <p>I have a new mantra called 'Get in the f*cking water, Julie.'</p>
+    <p>My history has placed boundaries and blocks on me that are now no longer useful. Motherhood and grandmothering made me a watcher, not a participant, and I found myself thinking I'm bored (not dull, happy with dull), but bored.</p>
+    <p>Through circumstances (age, illness) I had withdrawn from the simple things that made me feel alive: rain on my face, cold on my nose, the feel of water on my body. Little things that energise and clear the grey spaces in my brain to make way for laughter.</p>
+    <p>I had withdrawn to be consistently comfortable. In that comfort, I found the enemies of older life's enjoyment creeping in: negativity, cynicism, resentment, rage, grumpiness, selfishness, and tentacles of dissatisfaction.</p>
+    <p>So… here I am, breaking a boundary about covering up that served me well as a young girl and kept me safe — one I no longer need, haven't needed since I left home at 17.</p>
+    <p>I dropped the dressing gown of death at 7:30 in the morning, braving it up to 'GET IN THE F*CKING WATER, JULIE.'</p>
+    <p>It doesn't have to be big things, or even many things (I have accepted I'm not going to be a film star or climb Everest) — it's the little things, the boundaries and comforts I need to cross or push against occasionally, just to still feel like… like… me.</p>
+    <p>I have this feeling that ageing is not for the faint-hearted, and if I want to enjoy it, I think I have to continue to be a bit brave to retain my sense of self.</p>
+    <p>Is anyone else finding this, or do you have a magic pill? If you do, I'll have a dozen bottles emptied into a caramel frappé with a good splash of grog — any grog will do.</p>
+    <p>I'm a terrible swimmer.</p>
+    <div class="author-block">
+      <div>
+        <div class="author-name">Julie Hayes</div>
+        <div class="author-role">Author</div>
+        <div class="author-bio">Julie Hayes grew up wild on horseback in the Australian bush. At 15 she founded her first riding school, intuitively drawn to children struggling with self-worth.<br><br>With her husband David, she went on to create Australia's most awarded school for at-risk youth. Now an award-winning sculptor working in wire and resin, she lives rurally, deeply rooted, a teacher in soul and spirit.</div>
+      </div>
+    </div>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:'DWC Short Story',
+  title:"Sir Archibald's Guide to Avoiding the Vet (And Getting Revenge)",
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/b40e7802-6236-499d-bf54-510928b58873_1.png?v=1782364406',
+  caption:'A harrowing account of betrayal, thermometers, and the slow art of feline revenge.',
+  byline:'Elaine Edwards', keepByline:false,
+  body:`
+    <p>I write to you now not from a sun-drenched windowsill, nor from the blissful embrace of my crocheted basket, nor even from Lorraine's newest fleece-lined laundry hamper (RIP, your socks).</p>
+    <p>No.</p>
+    <p>I write from under the sofa.</p>
+    <p>Yes — <em>under</em> the sofa, where the dust bunnies speak in whispers and something suspiciously sticky lives near the skirting board. This is where I've taken refuge. This is where I am regrouping, nursing my wounds.</p>
+    <p>For I, Sir Archibald Fluffington III — Fluff of House Biscuit, Emperor of the Side Table Realm, Undisputed Duke of Disdain — have just endured a harrowing, soul-shattering encounter with true evil.</p>
+    <p>No, not the toddler from next door who once attempted to feed me a crayon.</p>
+    <p>I speak of her.</p>
+    <p><strong>Dr Edith Crimble.</strong></p>
+    <p>Veterinarian.<br>Wielder of cold instruments and colder stares.<br>Possibly a lizard in disguise.</p>
+    <p>This, dear reader, is the story of how I survived the worst day of my life.</p>
+    <p>It began as all betrayals do: quietly. Subtly. With a box.</p>
+    <p>Not a joyous Amazon box filled with crinkly brown paper and the occasional toy mouse. No, no.</p>
+    <p>This was a carrier.</p>
+    <p>Plastic. Blue. Reeking of bleach and unspoken trauma. I felt its presence long before Lorraine heaved it from the wardrobe. My ears twitched. My whiskers tingled.</p>
+    <p>Jeremy tried to be casual about it. "Just a check-up, mate".</p>
+    <p><em>Just</em> a check-up. Ha! You absolute clot.</p>
+    <p>Let me translate:<br>Thermometers.<br>Judgement.<br>Probing.<br>Dignity — <em>obliterated.</em></p>
+    <p>Reader, I ran.</p>
+    <p>Across the bookcase (bye-bye, family photos). Under the bed (where I growled like a wartime general). Inside the airing cupboard (steamy). Behind the washing machine (claustrophobic, dusty, mildly enlightening).</p>
+    <p>But they found me. With tuna bribes and squeaky voices and the betrayal of a man I once trusted to scratch my chin and respect my boundaries.</p>
+    <p>Lorraine used The Voice. You know the one. Sickly sweet. Wobbly with false reassurance.</p>
+    <p>"Come on, sweetheart. It'll be quick".</p>
+    <p>Lies. Deception. Treachery wrapped in pastel cardigans.</p>
+    <p>I was shoved into the carrier while Jeremy hummed a tune that can only be described as nervous guilt meets indie regret. They slammed the latch shut like criminals burying evidence.</p>
+    <p>And so, off we went.</p>
+    <p>The vet's waiting room is a place of torment. It smells of disinfectant, sorrow, and Labrador breath.</p>
+    <p>Inside sat a pug in a neck cone, two guinea pigs visibly plotting an uprising, and a parrot who screamed "NO TOUCHING" every seven seconds.</p>
+    <p>A dog — Kevin, I later learned — attempted to sniff my carrier. I hissed. He cried. We understood each other perfectly.</p>
+    <p>And then she emerged.</p>
+    <p>Dr Crimble.</p>
+    <p>Sensible shoes. Oversized glasses. A name badge that dared to say "Here to help!".</p>
+    <p>"Ah! Archibald!" she said brightly, as if I hadn't just been kidnapped and carted into her House of Horrors.</p>
+    <p>I glared. Coldly. Quietly. Threateningly.</p>
+    <p>Jeremy cooed at me. "It's just a quick look, pal".</p>
+    <p>I meowed once. Loudly. In pure, fluent Disapproval.</p>
+    <p>A hamster fainted.</p>
+    <p>The exam room was worse. Cold metal surfaces. Diagrams of internal organs no cat ever wanted to think about. A poster featuring a grinning cat with the caption, "Happy After a Dental Cleaning!".</p>
+    <p>He was not happy. He was dead inside.</p>
+    <p>Crimble plucked me from the carrier like I was luggage. Plonked me on the table.</p>
+    <p>"Let's have a little look, shall we?"</p>
+    <p>She poked my ribs. Commented on my weight. <em>Slight weight gain</em>, she said.</p>
+    <p>Excuse me?</p>
+    <p>I am not chubby. I am <strong>luxuriously plush.</strong> Built for winter. Designed for opulence.</p>
+    <p>She opened my mouth. Called my teeth "charming but suspicious". Then she reached for the stethoscope.</p>
+    <p>I stared into her soul.</p>
+    <p>She stared right back.</p>
+    <p>And then, reader, <em>then</em> — she reached for The Thermometer.</p>
+    <p>You know where it goes. I don't need to say it. We're civilised mammals. But I will say this:</p>
+    <p>I. Lost. It.</p>
+    <p>I twisted. I flailed. I produced noises only heard in horror films and cursed basements. I launched myself from the table in a display of acrobatic terror Cirque du Soleil should have witnessed.</p>
+    <p>Jeremy tried to hold me. I scratched him. Twice. He deserved it.</p>
+    <p>"Bit dramatic, this one," Crimble muttered.</p>
+    <p>Bit dramatic?</p>
+    <p>Ma'am, you just threatened the sovereign territory of my bottom.</p>
+    <p>When the trauma ended — when the thermometer had been removed, the scales lied about my weight, and Crimble had scribbled "anxious disposition" in my file — I waited.</p>
+    <p>Bided my time.</p>
+    <p>Jeremy stood by the counter, collecting flea tablets and pretending not to be emotionally shattered. Crimble opened the door for him.</p>
+    <p>That was my moment.</p>
+    <p><strong>I bolted.</strong></p>
+    <p>Down the corridor. Past reception. Over Kevin the Retriever (again). Through the automatic doors like a furry Jason Bourne.</p>
+    <p>The receptionist shouted, "CODE FLUFF!"</p>
+    <p>Too late. I was gone.</p>
+    <p>I hid in the hedge near the car park for twenty-seven minutes.</p>
+    <p>It gave me time to reflect. To consider who I'd become. The things I'd endured. The hands I'd slapped.</p>
+    <p>Eventually, Lorraine found me. She crouched, tears in her eyes, holding out a tin of sardines.</p>
+    <p>I made her beg.</p>
+    <p>I am not petty. I am a cat. We invented spite.</p>
+    <p>I allowed myself to be scooped up like a weary war hero returning from the frontlines.</p>
+    <p>She held me close. Whispered apologies. Jeremy offered me his hoodie like a blanket of remorse.</p>
+    <p>I said nothing. But I licked my paw and slapped his cheek lightly. Forgiveness is earned, not given.</p>
+    <p>Back home, I retreated under the sofa. I ignored Dreamies. I refused belly rubs. I rejected affection for a full 72 minutes.</p>
+    <p>But I plotted.</p>
+    <p>Oh yes, I plotted.</p>
+    <p>Later that week, I knocked Lorraine's essential oil diffuser off the shelf.<br>I chewed Jeremy's shoelace while he slept.<br>I dragged a single sock into the litter tray and buried it with precision.</p>
+    <p>Justice.</p>
+    <p>I survived.</p>
+    <p>The vet did not break me. The thermometer did not define me. Crimble did not win.</p>
+    <p>Let it be known:<br>I am Sir Archibald Fluffington III.<br>Knight of the Knotted Curtain Tie.<br>Sovereign of Sardines.<br>Enemy of All Who Wear Surgical Gloves.</p>
+    <p>Let this tale be a warning to veterinary professionals everywhere:</p>
+    <p>We remember.<br>We plan.<br>We poop <em>next to</em> the tray, not in it.</p>
+    <p>And someday, when you least expect it…</p>
+    <p>We return.</p>
+    <div class="author-block">
+      <div>
+        <div class="author-name">Elaine Edwards</div>
+        <div class="author-role">Short Fiction · Contributor</div>
+        <div class="author-bio">Social media sorceress by day, short story spinner by night. Obsesses over true crime, and firmly believes commas save lives — especially in confessions.</div>
+      </div>
+    </div>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:'Scars That Shine',
+  title:'Amy Ferris on The Stories We Bury, The Voices We Need',
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/Untitled_design_5.jpg?v=1782455720',
+  caption:'On the stories women bury, and what it costs to keep them buried.',
+  byline:'Amy Ferris', keepByline:false,
+  body:`
+    <p>Almost every woman I know at some point in her life has been abused, harassed, attacked, preyed upon — dirtied, sullied; an unwanted sexual proposal offered on the street, in a bar, on the job, in the back of a cab, in a hotel room.</p>
+    <p>A verbal attack, an emotional beating.</p>
+    <p>When I was younger — much, much younger — I gave a guy, a fashion designer, a blowjob so I could get the receptionist job at his swanky showroom.</p>
+    <p>I could not say no.</p>
+    <p>I needed a job, and he held all the cards and all the power.</p>
+    <p>I had no self-esteem; none, zero, zilch. And with no self-esteem comes a desperation. And what I learned and what I know: desperation breeds desperation.</p>
+    <p>It multiplies.</p>
+    <p>I buried that story — that experience — way down deep. For years and years I never told a soul about what I did to get that job. It was buried next to other shameful stories; other guilt-ridden experiences, other embarrassing things I did. And for years and years, every time those stories bubbled up, I pushed it all down as far as I could, trying desperately to annihilate them, destroy them, keep them from daylight.</p>
+    <p>I wanted those stories, those shameful, awful, embarrassing stories, to disappear, to be gone. And then the whole Bill Cosby abuse story surfaced, and women were sharing their tales of horror, and I decided yes, it was time to share that story — the fashion designer story — and honest to God, my life, my heart, felt less burdened, less frightened, less damaged. I wrote the piece, <em>Cosby and Effect</em>. I was truly shocked at the effect — no pun intended — that piece had.</p>
+    <p>We no longer need to be loyal — or protect — the ones who abused us, hurt us, violated us.</p>
+    <p>I couldn't sleep last night when I read about Virginia Giuffre, the amazingly brave woman who came forward about Jeffrey Epstein and Prince Andrew. She was so courageous and spoke so powerfully — she had been abused her entire life. She died yesterday. She took her own life.</p>
+    <p>All of these stories — our stories — hers, mine, yours… the woman down the street, the girl at the checkout counter, the wife walking two, three steps behind her husband, the lady you never see who keeps her blinds closed, the older woman whose sunglasses hide the truth — all those stories need to be told, exposed to sunlight.</p>
+    <p>Those stories, the ones that are unbearable — tainted, stained with semen and blood, welts and scars; filled with bad men and yes, bad women and bad, ugly, vile humans, and bad choices, and folks who didn't give a f*ck about our lives when we needed so badly, so badly, to be cared for; scary words that were spoken or whispered into our ear, words that scared the shit out of us — those are the stories that need to be out in the world now, right now.</p>
+    <p>We can no longer keep them hushed, silenced, buried — buried in us; eating away at us, hurting us and harming us, making us sick; keeping us small and fearful and ashamed.</p>
+    <p>Those stories clutter our lives, every bit — head to toe, heart and soul.</p>
+    <p>Those stories need to be out of our bodies, because they drive a wedge between ourselves and the world, keeping us from being intimate, and by intimate I mean present and alive, and Goddess knows, we ALL need to be out and about making a huge, motherf*cker massive ruckus in the world.</p>
+    <p>Our world.</p>
+    <p>So, to all the women… and yes, girls and boys and men, who have come forward — and keep coming forward — wearing your courage and your brave out loud: I thank you. I so deeply thank you. Your bravery and your courage is mighty fierce and gorgeous. Please, never cover it up.</p>
+    <p style="font-size:0.78rem;color:var(--text-mid);font-style:italic;margin-top:18px;">This piece discusses suicide. If you've been affected by anything in this article, the Samaritans are available free, any time, on 116 123.</p>
+    <div class="author-block">
+      <div>
+        <div class="author-name">Amy Ferris</div>
+        <div class="author-role">Author</div>
+        <div class="author-bio">Amy Ferris is an author, screenwriter, editor, and playwright. Her memoir, <em>Marrying George Clooney</em>, was adapted into an Off-Broadway play. Her new memoir, <em>Mighty Gorgeous</em>, was published in 2023; <em>Amy In Retrograde</em> follows in March 2026.</div>
+      </div>
+    </div>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:"Pat's Book Picks",
+  title:'Pat\u2019s Book Picks from May',
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/DWC_Magazine_Covers_1080_x_1080_px_2_f7f039ce-78f0-4ca9-aac3-4c2a6a111c56.png?v=1767150701',
+  caption:"May's picks take you somewhere else entirely — historical fiction with a side of mystery, magic and Dickens.",
+  byline:'Pat Allchorne', keepByline:false,
+  body:`
+    <div class="book-block">
+      <div class="book-tag">Crime, Mystery</div>
+      <img class="book-cover" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1727788923i/321545.jpg" alt="A Morbid Taste for Bones">
+      <div class="book-title">A Morbid Taste for Bones</div>
+      <div class="book-author">by Ellis Peters</div>
+      <p>Wales, 1137. The ambitious head of Shrewsbury Abbey has set his sights on the sacred remains of Saint Winifred, buried in a remote mountain village — and sends the canny Brother Cadfael along on the expedition. When the village's most vocal opponent is found shot dead, Cadfael knows a murderer walks among them.</p>
+      <a class="book-buy" href="https://amzn.to/49lgbBm" target="_blank" rel="noopener">Amazon US</a>
+      <a class="book-buy" href="https://amzn.to/3OGHyz0" target="_blank" rel="noopener">Amazon UK</a>
+    </div>
+    <div class="book-block">
+      <div class="book-tag">Fantasy, Mystery</div>
+      <img class="book-cover" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1392415313i/18498569.jpg" alt="The Miniaturist">
+      <div class="book-title">The Miniaturist</div>
+      <div class="book-author">by Jessie Burton</div>
+      <p>Amsterdam, 1686. Eighteen-year-old Nella Oortman arrives to begin life as the wife of a wealthy merchant trader, only to find a cold, secretive household. When her husband gifts her a cabinet-sized replica of their home, the miniaturist she commissions begins sending pieces that seem to know things they should not.</p>
+      <a class="book-buy" href="https://amzn.to/4n4Xwj7" target="_blank" rel="noopener">Amazon US</a>
+      <a class="book-buy" href="https://amzn.to/4eitPbZ" target="_blank" rel="noopener">Amazon UK</a>
+    </div>
+    <div class="book-block">
+      <div class="book-tag">Middle East, Contemporary</div>
+      <img class="book-cover" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1708964601i/202468422.jpg" alt="There Are Rivers in the Sky">
+      <div class="book-title">There Are Rivers in the Sky</div>
+      <div class="book-author">by Elif Shafak</div>
+      <p>Three lives, two rivers, one ancient poem — and a single drop of water that binds them across centuries. From the Booker Prize-shortlisted author of <em>The Island of Missing Trees</em>. Water remembers. It is humans who forget.</p>
+      <a class="book-buy" href="https://amzn.to/42tFOwl" target="_blank" rel="noopener">Amazon US</a>
+      <a class="book-buy" href="https://amzn.to/3QL6jdV" target="_blank" rel="noopener">Amazon UK</a>
+    </div>
+    <div class="book-block">
+      <div class="book-tag">Classic, Historical Fiction</div>
+      <img class="book-cover" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1344922523i/1953.jpg" alt="A Tale of Two Cities">
+      <div class="book-title">A Tale of Two Cities</div>
+      <div class="book-author">by Charles Dickens</div>
+      <p>Set against the violence of the French Revolution, Dickens' enduring classic follows Charles Darnay and the brilliant, self-destructive Sydney Carton through a story of sacrifice and resurrection. Its opening and closing lines remain among the most recognisable in English literature.</p>
+      <a class="book-buy" href="https://amzn.to/3QIQaWw" target="_blank" rel="noopener">Amazon US</a>
+      <a class="book-buy" href="https://amzn.to/4cYOnnE" target="_blank" rel="noopener">Amazon UK</a>
+    </div>
+    <div class="book-block">
+      <div class="book-tag">Historical Fiction, Fantasy</div>
+      <img class="book-cover" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1276681573i/101086.jpg" alt="Stonehenge">
+      <div class="book-title">Stonehenge</div>
+      <div class="book-author">by Bernard Cornwell</div>
+      <p>Four thousand years ago, a stranger's death sets in motion a chain of events that will result in one of mankind's most singular achievements — built by three brothers, each with a very different vision. Epic in scope, mysterious as the stones themselves.</p>
+      <a class="book-buy" href="https://amzn.to/4cYOnnE" target="_blank" rel="noopener">Amazon US</a>
+      <a class="book-buy" href="https://amzn.to/4cY195x" target="_blank" rel="noopener">Amazon UK</a>
+    </div>
+    <div class="author-block">
+      <div>
+        <div class="author-name">Pat Allchorne</div>
+        <div class="author-role">DWC Book Reviewer</div>
+        <div class="author-bio">For nearly twenty years, Pat ran a second-hand bookshop in Warrington, over 40,000 books on every subject imaginable. Now retired, she reads with the same joy she always has, in between singing, another passion of hers.</div>
+      </div>
+    </div>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:'DWC 100 Women',
+  title:"He's Coming Home, by Women's Aid UK",
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/Untitled_design_4.jpg?v=1782455721',
+  caption:'A football chant, twisted into a warning — and a campaign that took it seriously.',
+  byline:"Women's Aid UK", keepByline:false,
+  body:`
+    <p>The "He's Coming Home" campaign by Women's Aid UK opened up a crucial dialogue about the dark side of football fandom: domestic violence.</p>
+    <p>The phrase "He's Coming Home", a clever twist on the popular football chant "It's Coming Home", was designed to highlight the chilling reality that for many women, the return of their partner from a football match or a pub often meant an increase in domestic abuse.</p>
+    <p>Studies consistently show a disturbing correlation between football matches and increased incidents of domestic abuse, making campaigns like this more essential than ever.</p>
+    <h4>The Alarming Stats</h4>
+    <ul>
+      <li>A landmark study by Lancaster University revealed that domestic violence incidents in England rise by 38% on match days when the national team plays. Even when the team wins, there's a 26% increase the following day, as post-match celebrations sometimes turn violent.</li>
+      <li>Losses can exacerbate tensions, with emotional outbursts and alcohol consumption acting as catalysts for abuse. For example, during the 2018 FIFA World Cup, domestic violence incidents spiked by 33% following England's loss to Croatia in the semi-finals.</li>
+      <li>Reports from police forces show that calls about domestic violence are significantly higher during large-scale football tournaments compared to regular days.</li>
+    </ul>
+    <h4>Why Football Nights Become Dangerous</h4>
+    <p>Several factors contribute to this troubling pattern, including alcohol consumption. Football matches are often paired with heavy drinking, a known risk factor for violent behaviour — studies suggest alcohol-related violence accounts for over 50% of domestic abuse cases in the UK.</p>
+    <h4>Real-Life Stories</h4>
+    <p>Women's Aid UK shared accounts of victims whose experiences highlight the devastating link between football and abuse:</p>
+    <ul>
+      <li>Emma (name changed for privacy) recalls dreading tournament nights: "If his team lost, I knew I'd be the one paying for it. A bad match meant a bad night for me".</li>
+      <li>Sophie, another survivor, shared how the sound of a football chant still triggers anxiety years later, as it reminds her of nights when celebrations turned violent.</li>
+    </ul>
+    <h4>A Wider Problem</h4>
+    <p>The issue isn't limited to England. Similar trends have been documented worldwide, with reports from Spain, Germany, and Brazil showing spikes in domestic violence tied to football events. In some cases, abuse stems from gambling losses or heightened nationalistic fervour during matches.</p>
+    <h4>How the Campaign Made a Difference</h4>
+    <p>The campaign didn't just raise awareness — it provided tools and support for victims. Women's Aid UK collaborated with local police and social services, ensuring victims could access emergency shelter and legal assistance during tournaments.</p>
+    <ul>
+      <li>They distributed "safe words" victims could use in stores or over the phone to discreetly signal for help.</li>
+      <li>The campaign included training for bartenders and stadium staff to recognise signs of abuse and provide support.</li>
+      <li>Football players and pundits were enlisted as allies, publicly condemning domestic violence and encouraging fans to celebrate responsibly.</li>
+    </ul>
+    <h4>A Call to Action</h4>
+    <p>The "He's Coming Home" campaign is a stark reminder of how societal celebrations can have unintended, devastating consequences for vulnerable groups. As we cheer for our teams, we must also take action to protect those for whom football nights are a source of fear.</p>
+    <ul>
+      <li>If you're a fan, celebrate responsibly.</li>
+      <li>If you notice warning signs of abuse in your community, report it.</li>
+      <li>Support organisations like Women's Aid UK to ensure victims have the resources they need.</li>
+    </ul>
+    <p>By addressing the root causes of football-related violence and offering robust support, we can ensure that home is a place of safety and love for everyone — even on match days.</p>
+  `
+},
+
+{
+  type:'nominees',
+  eyebrow:'Content Creator Awards 2026',
+  title:'Featured Nominees',
+  caption:"Four standout entries from this year's DWC Content Creator Awards — creators using their voice for something bigger than themselves.",
+  nominees:[
+    {id:4, name:'Jamie Tedrick-Monroe', category:'Community Builder', channel:'Safe2Talk2 Consulting Community', url:'https://www.facebook.com/groups/1703471310313877/', photo:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/10867.jpg?v=1779460240', bio:'Created Safe2Talk2 as a healing-centred space for people navigating trauma, PTSD, burnout, addiction recovery, grief, and major life transitions.', seedVotes:105},
+    {id:5, name:'Kylie King', category:'Social Media Creator', channel:'Kylie King', url:'https://www.facebook.com/kyliekingphoenix', photo:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/10868.jpg?v=1779460240', bio:"Creates content around healing, transformation, and self-reconnection through her 'Remember, Release, Rewrite' framework.", seedVotes:107},
+    {id:2, name:'Caroline Rena', category:'YouTube Channel of the Year', channel:'Awakening Soul Divinity Podcast', url:'https://www.youtube.com/@AwakeningSoulDivinityPodcast', photo:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/10820.jpg?v=1778876962', bio:'Podcast and community rooted in honest conversation around emotional healing, grief, trauma, identity, and awakening.', seedVotes:29},
+    {id:3, name:'Dr. Jacquiline Cox h.c.', category:'Community Builder', channel:'Listen Linda', url:'https://www.facebook.com/ListenLinda23', photo:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/10819.jpg?v=1778876962', bio:'Creates faith-centred, emotionally honest content for women who are healing, rebuilding, and learning to use their voice.', seedVotes:5}
+  ]
+},
+
+{
+  type:'article',
+  eyebrow:"Cornerstone Partner · Michelle Wollaston",
+  title:"Moon Phases",
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/DWC_Conversations_Covers_1080.jpg?v=1779589393',
+  caption:'Grounding what matters in June, then letting go of what doesn\u2019t in July.',
+  byline:'Michelle Wollaston', keepByline:false,
+  body:`
+    <div class="moon-month-label">June — Grounding the Vision</div>
+    <p>June moves under one quiet, grounding influence — Capricorn's Full Moon, asking you to root your ambitions in reality.</p>
+    <div class="moon-mini">
+      <img src="https://cdn.shopify.com/s/files/1/0703/3022/0765/files/13.png?v=1779591366" alt="Full Moon in Capricorn">
+      <div class="moon-mini-header">
+        <div class="moon-mini-date">29 June</div>
+        <div class="moon-mini-phase">full moon in capricorn ♑</div>
+        <div class="moon-mini-tag">Root your dreams in reality.</div>
+      </div>
+      <div class="moon-mini-text">This moon invites you to release outdated ambitions, perfectionism, and burdensome responsibilities. Recommit to goals built on integrity and truth.</div>
+    </div>
+
+    <div class="moon-month-label">July — Emotional Roots & Liberation</div>
+    <p>July holds one of the year's most evocative pairings — Cancer calling you home to what nourishes, while Aquarius invites you to release what has quietly become a cage.</p>
+    <div class="moon-mini">
+      <img src="https://cdn.shopify.com/s/files/1/0703/3022/0765/files/14.png?v=1779591366" alt="New Moon in Cancer">
+      <div class="moon-mini-header">
+        <div class="moon-mini-date">14 July</div>
+        <div class="moon-mini-phase">new moon in cancer ♋</div>
+        <div class="moon-mini-tag">This nurturing moon invites emotional re-connection.</div>
+      </div>
+      <div class="moon-mini-text">Set intentions around creating safety, building emotional resilience, and honouring your intuition.</div>
+    </div>
+    <div class="moon-mini">
+      <img src="https://cdn.shopify.com/s/files/1/0703/3022/0765/files/15.png?v=1779591366" alt="Full Moon in Aquarius">
+      <div class="moon-mini-header">
+        <div class="moon-mini-date">29 July</div>
+        <div class="moon-mini-phase">full moon in aquarius ♒</div>
+        <div class="moon-mini-tag">Liberate yourself from outdated norms and emotional entanglements.</div>
+      </div>
+      <div class="moon-mini-text">Make space for authentic expression, visionary insight, and aligned community.</div>
+    </div>
+    <div class="author-block">
+      <div>
+        <div class="author-name">Michelle Wollaston</div>
+        <div class="author-role">Life Direction Mentor · Amazon Best-Selling Author · Host, Soul Loom Podcast</div>
+        <div class="author-bio">Michelle Wollaston is a life direction mentor for women navigating emotionally tangled and transitional seasons of work and life. With more than 25 years' experience in adult learning, leadership development, and vocational education, she brings a grounded, practical approach to helping women make sense of complexity and move forward with clarity.<br><br>She is an Amazon best-selling author, host of the Soul Loom podcast, and a contributor to several online publications. Her work is known for its calm authority, clear thinking, and ability to articulate what many women have been feeling but couldn't yet name.</div>
+      </div>
+    </div>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:'DWC 100 Women',
+  title:'Margaret E. Knight, Paper Bag',
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/Untitled_design_3.jpg?v=1782455721',
+  caption:'She invented the flat-bottomed paper bag — then took the man who stole it to court, and won.',
+  byline:'DWC 100 Women', keepByline:false,
+  body:`
+    <p>Born in 1838 in York, Maine, Margaret E. Knight displayed remarkable curiosity and inventiveness from a young age. Growing up in a time when opportunities for women were severely limited, Knight faced challenges that would have daunted many.</p>
+    <p>By the age of 12, she had already created her first invention — an improvement to the safety of textile looms that would prevent injuries. This early success set the stage for a lifetime of innovation.</p>
+    <p>Knight's most famous invention, the machine that produced square-bottomed paper bags, revolutionised the packaging industry. Before her invention, bags were little more than flat envelopes, inadequate for carrying many of the goods we take for granted today.</p>
+    <p>Knight saw a problem and set out to solve it, meticulously designing a machine that could cut, fold, and glue paper in a way that created a flat-bottomed bag — one that could stand on its own and hold more content. This invention not only changed the way we shop but also laid the groundwork for countless other packaging innovations.</p>
+    <p>However, Knight's journey to success was far from easy. In 1868, after completing her design, she faced one of the most significant challenges of her life — a man named Charles Annan stole her idea and applied for a patent, believing that a woman could not possibly have invented such a complex machine. Undeterred, Knight took Annan to court.</p>
+    <p>In an era when women rarely stepped into the public eye, let alone a courtroom, Knight stood firm, presenting her detailed sketches and notes as evidence. The court ruled in her favour, awarding her the patent and cementing her place in history as the rightful inventor.</p>
+    <p>But Knight's achievements go beyond just her inventions. She was a woman who, through her work, advocated for the recognition of women in fields dominated by men. In a time when women's contributions were often overlooked or outright dismissed, Knight's persistence and ingenuity challenged the status quo. She held over 20 patents in her lifetime — a remarkable feat for anyone, but especially for a woman in the 19th century. Each patent was a statement of her belief in the power of innovation to change lives.</p>
+    <p>Throughout her life, Margaret E. Knight faced societal and legal barriers that sought to limit her potential, but she never wavered.</p>
+    <p>Her story is not just about the paper bag machine; it's about breaking barriers, defying expectations, and leaving a mark on the world that will be felt for generations.</p>
+    <blockquote><p>Knight showed that creativity and determination know no gender. Her work continues to serve as a source of inspiration, reminding us all that with passion and perseverance, we can turn our ideas into reality, no matter the obstacles in our way.</p></blockquote>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:'Cornerstone Partner · Jamie Tedrick-Monroe',
+  title:'Redefining Love',
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/DWC_Conversations_Covers_1080_3.jpg?v=1779713504',
+  caption:'When a name meant to signal love becomes a tool of harm.',
+  byline:'Jamie Tedrick-Monroe', keepByline:false,
+  body:`
+    <p>The name of Jesus is often spoken alongside words like love, compassion, forgiveness, and grace. For many, it represents safety, redemption, and moral guidance. Yet history tells another story as well. That same name has been invoked in moments of extraordinary violence. People have been killed, colonised, molested, kidnapped, silenced, and spiritually coerced while being told it was done in the name of love. This contradiction is not small or abstract. It lives in bodies, in family histories, and in generational trauma.</p>
+    <p>The question many people eventually ask is not rebellious or faithless. It is deeply ethical. How can a name associated with love be used to justify acts that destroy life, dignity, and safety? The discomfort of that question often signals moral awareness rather than disbelief. It arises when lived reality collides with a story that no longer holds.</p>
+    <p>At its core, love does not require fear to function. Love does not demand silence from the harmed. Love does not excuse violence as discipline or call abuse a test of faith. When those things occur, something has already gone wrong, regardless of the language used to justify it.</p>
+    <blockquote><p>When language is used to override conscience rather than guide it, something has already gone wrong — regardless of what word is placed on top of it.</p></blockquote>
+    <p>Throughout history, religious language has carried authority. When a belief system gains cultural dominance, it often becomes intertwined with governance, social control, and economic power. In those moments, religion stops being a personal or communal practice of meaning and becomes a tool for enforcing hierarchy. Sacred language is no longer used to guide conscience but to override it.</p>
+    <p>Violence committed under religious justification often relies on dehumanisation. Entire groups are labelled as sinful, dangerous, or lesser. Once a group is framed as spiritually inferior or morally corrupt, harm against them becomes easier to rationalise. Colonisation offers a clear example. Indigenous peoples were stripped of land, culture, and life while colonisers claimed they were bringing salvation. The language of love was used to erase identities, dismantle communities, and justify genocide.</p>
+    <p>The same pattern appears in institutional abuse. Survivors of sexual violence within churches are frequently told to forgive, stay silent, or protect the reputation of the institution. The name of Jesus is invoked not to protect the vulnerable, but to protect power. Love is reframed as endurance. Faith is redefined as compliance.</p>
+    <p>A name does not sanctify behaviour. Behaviour reveals truth. When actions cause harm, fear, or erasure, no sacred language can redeem them. The most loving act may not be defending a name at all, but defending people.</p>
+    <div class="author-block">
+      <div>
+        <div class="author-name">Jamie Tedrick-Monroe</div>
+        <div class="author-role">Trauma-Aware Coach · Founder, Safe2Talk2 Consulting</div>
+        <div class="author-bio">Jamie Tedrick-Monroe is a trauma-aware coach and the founder of Safe2Talk2 Consulting, supporting individuals who are ready to move beyond surface-level coping and into real, sustainable change. With a background rooted in lived experience, coaching, and community building, she brings a grounded, practical approach to healing — one that centres honest conversation and self-leadership.<br><br>Jamie incorporates tools such as Human Design to help clients deepen personal insight and step more fully into who they are. She is the creator of transformational challenges and host of Safe2Talk2 Sessions: Real People, Real Stories — Jamieisms Included, a space where authentic conversation meets genuine connection.</div>
+      </div>
+    </div>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:'Cornerstone Partner · Sofia Pedroso',
+  title:'The Breakdown That Built Me',
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/DWC_Magazine_Covers_1080_Jan_Feb_March_2026_9.jpg?v=1779778577',
+  caption:'How a crisis at 43 sparked the business — Shiffully — that came after.',
+  byline:'Sofia Pedroso', keepByline:false,
+  body:`
+    <p style="font-style:italic;color:var(--text-mid);margin-bottom:18px;">A personal journey through collapse, reinvention, and the shift that changed everything.</p>
+    <p>I've always seen myself as independent — stubbornly so, if I'm honest. It was part of my identity, almost a trademark. And then, at 43, everything collapsed so quickly it felt as though someone had pulled the floor out from under me. My husband's business shut down, the debts came rushing in behind us, and I had just lost my job on top of it. One afternoon, I did the maths and realised I could only survive on my own for a month or two. I had no savings. Nothing to fall back on.</p>
+    <p>And so, I did one of the hardest things I've ever done: I asked my parents for help.</p>
+    <p>It wasn't just my independence I was losing. What made it truly painful was knowing I was adding pressure to two people I love who were already stretched. My dad dismantled his office and rebuilt it in the garage — a cold, makeshift space that didn't feel like his at all. My mum adjusted the grocery budget to feed two extra mouths. Watching them do all that because my life had fallen apart was heartbreaking.</p>
+    <p>Still, even when things look impossible, something in me refuses to stay down. I accepted a job offer slightly above minimum wage, telling myself it was temporary. Meanwhile, I began attending entrepreneurship events, hoping that being surrounded by like-minded people would help me. I had ideas, creativity, leadership — but I lacked confidence. Every attempt felt shaky, as though it could collapse at the slightest touch.</p>
+    <p>The breaking point came during yet another failed business attempt. I remember being on the phone with a friend, crying so hard I could barely speak. She paused and said, "But how many attempts were there really?". Something about that question stayed with me. Later that night, I wrote everything down — every idea, every project, every escape plan. Seeing it all on paper, I realised I hadn't been building anything. I had just been jumping from one lifeboat to another. Despair had taken the wheel without me noticing.</p>
+    <p>And then life added one more hit:</p>
+    <p>I lost my job again. By then I had already moved out of my parents' house, and I was not ready to go back. I had to survive, no matter what.</p>
+    <p>So I made the hardest choice: I let go of my dream of being an entrepreneur. I accepted that, for the moment, I needed stability — corporate stability. I had always been intimidated by that world — the hierarchy, the scale, the procedures — but I applied anyway. Somehow, I ended up being hired by a large multinational.</p>
+    <p>I adapted. I learned. I grew. But as I moved up, I felt myself drifting away from who I was. My work didn't feel like mine. It wasn't fulfilling. It didn't carry the meaning I was craving.</p>
+    <p>One night, after months of that vague ache of "something's missing", I prayed for meaning. Just that. Nothing complicated.</p>
+    <p>About a month later, everything shifted.</p>
+    <p>I came across the idea that emotional energy from past experiences can get stuck in the body and quietly shape how we feel, think, and react. I didn't dive into it with faith, but with hope — approaching it with curiosity, almost like an experiment. I started releasing emotional patterns in myself and began feeling the shift. Everything loosened. I felt different — better — in the ways that truly matter.</p>
+    <p>Word spread quietly. Friends referred other friends. People came to me with anything and everything — stress, relationship issues, emotional heaviness, old hurts. I didn't plan a side business; it simply grew on its own. Soon, I was making as much — sometimes more — in a few hours of this work as I made in my corporate job. And then that little thought showed up again: maybe I can do this full time.</p>
+    <p>But fear appeared with it. The thought of losing a consistent monthly income scared me more than I expected. Yet the desire to build something of my own — that spark — was stronger. So I started slowly, measuring every step.</p>
+    <p>I reduced my hours. I invested in programmes. I tried to build momentum. And still, I felt blocked. At first, I blamed the programme. Then I bought a second one, followed every step, and nothing changed.</p>
+    <p>Eventually, the truth hit me with absolute clarity:</p>
+    <p>The obstacle wasn't the outside world.<br>It wasn't the economy or the market.<br>It wasn't the lack of money, the lack of clients, or even the strategy.</p>
+    <p>The obstacle was me.<br>More precisely, it was the sandbags I was carrying that stopped my hot air balloon from rising.</p>
+    <p>That truth could have crushed me if I hadn't already learned how to drop those sandbags. But instead of breaking me, it opened a door. I realised I didn't see myself as someone capable of building something solid and growing. My identity was still attached to old failures. I wasn't blocked in skill — I was blocked by who I believed I was.</p>
+    <p>When I began shifting those internal patterns — emotionally, mentally, energetically — everything moved quickly. Setbacks stopped feeling like enemies. They became signals. Data. I started acting — and reacting — like someone who expected to rise, not collapse.</p>
+    <p>That shift became the foundation of the work I do today.</p>
+    <p>It became <strong>Shiffully</strong> — where I help entrepreneurs release the inner blocks standing between them and the business they're trying to build. After years of working with all kinds of emotional issues, I now focus almost entirely on entrepreneurs, because I know what it feels like to want more and feel held back by something invisible. And I know the freedom on the other side of that.</p>
+    <p>After everything I've lived, rebuilt, and witnessed, there is one truth I believe completely:</p>
+    <p>There are no dead ends.<br>There is always a way through.<br>There is no obstacle we cannot overcome.</p>
+    <p>When we release what keeps us stuck — when we shift — doors begin to open.</p>
+    <div class="author-block">
+      <div>
+        <div class="author-name">Sofia Pedroso</div>
+        <div class="author-role">Founder, Shiffully</div>
+        <div class="author-bio">For years, Sofia operated at full speed — 18-hour days, seven days a week — investing heavily in programmes that promised strategy, structure, and success. Yet nothing seemed to shift. It wasn't that the methods were flawed; it was that she was searching for answers outside herself without tending to the one element everything relied on: her.<br><br>This became her turning point. Real progress, she discovered, begins when we work on the person behind the business — the one driving every decision, every opportunity, every outcome.<br><br>Sofia now supports business women who are ready to move forward with greater ease — building success that feels grounded, aligned, and genuinely sustainable.</div>
+      </div>
+    </div>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:'Cornerstone Partner · Charlotte McKissick',
+  title:"A Grandmother's Grace, A Girl's Becoming",
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/may-2025-week-1-print-edition-4573623.webp?v=1756928826',
+  caption:'On loss, caregiving, and rebuilding trust with a granddaughter, one quiet day at a time.',
+  byline:'Charlotte McKissick', keepByline:false,
+  body:`
+    <p>Last year changed everything.</p>
+    <p>When I retired on 20 June 2020, I thought I was entering a season of peace. I pictured slow mornings and quiet afternoons in the deep southern suburbs of South Carolina. I had earned rest, or so I believed. But life — oh, life had other plans. You know what they say: we plan, and God laughs.</p>
+    <p>What followed were not just changes, but a cascade of transformations I never saw coming.</p>
+    <p>My brother died in my arms. Just weeks later, I became my mother's caregiver as she healed from a double knee replacement. Then my father passed. Amid my own heartbreak, my daughter gave birth to three beautiful grandchildren — 3,000 miles away. Her health began to fail, and I was on and off planes, crossing the country to help her through. All while neglecting my own health until my body finally gave out. I found myself in and out of hospitals, staring at the edge of something darker than I was ready to admit. It felt like a surreal film I couldn't walk out of.</p>
+    <p>So what do you do when life keeps knocking the wind out of you?</p>
+    <p>You hold on.</p>
+    <p>For me, that lifeline was Camille — our Camille. You don't know her like I do. She's shared her story through her articles, but as a real, living person, I know the truly loving, caring person she is. As both of us have been challenged by people, personalities, and circumstances, we've recognised a kinship. Survival and strength. It is truly a blessing.</p>
+    <p>When I was too sick to care or blind with worry, it was oftentimes her calm words that pulled me through it. Little by little, I began to reclaim myself.</p>
+    <p>I returned to the basics: nourishing food, check-ins with my doctor, honest rest, and clear priorities. Healing doesn't always come in grand gestures. Sometimes, it's in the quiet discipline of choosing yourself every single day.</p>
+    <p>I wanted desperately to fix everything for my daughter. But during my last visit, the truth finally settled in: this is her life, not mine. As hard as it was, I stepped back. Just like when you're teaching your child to walk or ride a bike — you have to let go. You have to trust. The little girl I raised is now the mother I believe she's becoming. I have faith in that.</p>
+    <p>In February, I arrived for the birth of my grandson only to walk into another storm. My daughter and her teenage daughter, Amythist, were locked in a painful power struggle. Amythist had isolated herself in her room, and my daughter was overwhelmed. And honestly? So was I.</p>
+    <p>Parenting teenagers is a different world. You can't meet them where they were — you have to meet them where they are. We, as parents, often see the defiant toddler, forgetting they're growing into full, aware human beings who carry knowledge, intuition, and a yearning to be heard.</p>
+    <p>So I didn't storm in. I didn't raise my voice or impose authority. Instead, I observed. I asked questions. Gently. Patiently. I offered small tasks and gave her the space to say yes or no. She resisted at first, expecting me to explode. But I never did. Instead, I showed up — inviting her along not for punishment or reward, but simply because I wanted her near me. I wanted her to feel wanted.</p>
+    <p>Eventually, trust bloomed.</p>
+    <p>We started talking. Not surface-level, but deep, meaningful conversations. Her insights stunned me. The vulnerability, the wisdom — this child, this young woman, was more aware than many adults I know. And I made a promise then: to protect this fragile bond until it was no longer fragile, but strong. Rooted.</p>
+    <p>What she wanted wasn't complicated — she wanted to be a child. Free to grow, to stumble, to feel joy and heartbreak, to learn how to trust and how to set boundaries. She didn't want to be a second mother or a keeper of responsibilities she never asked for.</p>
+    <p>So I showed her what honesty looks like by being honest myself. I owned my mistakes. I embraced my flaws. I let her see me — not perfect, but real. She's seen me fall and rise again. She's seen me say "no" to things that violate my peace. She's watching, always watching, and I'm teaching by doing.</p>
+    <p>Now, she's with me. She chose to come to South Carolina and try a new chapter. It wasn't easy for any of us, but she made the decision, and I removed the roadblocks. And here we are. Week one of a new beginning.</p>
+    <p>We're happy. Truly happy. Each day is a new memory in the making. We keep her mum close in every way we can — because this isn't about replacing anyone. It's about expanding love, not dividing it.</p>
+    <p>From her first breath to her first steps, from preschool drop-offs to teenage heartaches — I've been there. And now, in this sacred space, I get to be there again. I trust that one day, my daughter will do the same. Just as I did. Just as my mother did before me.</p>
+    <p>This is the journey.</p>
+    <blockquote><p>There is never too much love for a child. It takes a village, and every person who shows up with love in their hands and wisdom in their hearts is a gift. Our children are not possessions to control, but souls to guide. We don't own them. We're here to love them. To hold them. And eventually, to let them fly.</p></blockquote>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:'Contributor',
+  title:'Annette Densham On The Life Nobody Scripted',
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/11620.jpg?v=1782475085',
+  caption:'Fifty-six years of twists, turns, and showing up anyway.',
+  byline:'Annette Densham', keepByline:false,
+  body:`
+    <p>23 May 1970. Around 12pm, a wee little human came into this world. She went unnamed for a while because her parents couldn't decide on a name. They were convinced their first child together was a boy. Rohan and Lawrence were top picks.</p>
+    <p>Eventually, they named her Annette, after the midwife who'd helped bring her into the world.</p>
+    <p>Three years later, the man who'd insisted on her name dumped her, her mum, and baby sister in a crappy flat, and was not heard from again for over 20 years.</p>
+    <p>Though the first ten years of her life were filled with uncertainty and many moves — including a caravan for a while — she was curious, chatty, loved books and Doctor Who, Nancy Drew, and The Famous Five (George was her favourite).</p>
+    <p>They fled from Tassie to Queensland in 1977 to escape a violent man. For a while she was happy, loving not wearing woollies in winter. They lived next to an older couple from Italy who tucked them all under their wing and made the best chicken soup and cannoli.</p>
+    <h4>The Eighties</h4>
+    <p>Another move. This was meant to be the last one and the last new school. The blended family unit was meant to bring peace and stability. It didn't.</p>
+    <p>She hid in the library at school to escape the bullies, filling her green reading list four times that year. At home, she played cat and mouse to stay out of the hands of a man who was meant to keep her safe.</p>
+    <p>At 16, a pregnancy turned out to be a tumour, and she fell for a boy who confused control with love. She made friends with two girls who are still her best friends today.</p>
+    <p>With high school done, her dream of becoming a journalist was off to a red-hot start — university at night, a job at a newspaper, soaking it all in.</p>
+    <h4>The Nineties Tried to Kill Her</h4>
+    <p>The '90s tried to kill her twice. First, an ear disease nobody saw coming. Then, when she got her big break at a Sydney newspaper, it wasn't all it was cracked up to be. She sued the biggest media company in the world, lost, appealed, lost, and also lost herself to booze, drugs, and depression.</p>
+    <p>With her tail between her legs, she slunk back to Brisbane, broken, until she met the man who, 31 years later, is still by her side. They got married on a 38-degree day in December, on top of a mountain, in a picnic hut, with a carpet snake as an uninvited guest.</p>
+    <h4>Motherhood, Loss, and Starting Again</h4>
+    <p>The noughties saw her become a mum twice — even though doctors had told her it would never happen because of the severity of her endometriosis. Her mum died of cancer. Money was tight because she stayed home to raise the boys — she never wanted them to be latchkey kids like her.</p>
+    <p>By 2014, with both kids at school, she went back to work. After being headhunted for a role, financial restructuring saw her exit less than a year later. It doesn't pay to make a formal complaint against one of the boys' club.</p>
+    <h4>Publicity Genie</h4>
+    <p>One day, a friend invited her to a weekend seminar on using webinars to start a business. By the end of the weekend, Publicity Genie came out of the bottle. At 43, she started a PR agency.</p>
+    <p>She was a great writer but rubbish at all the other stuff, and took one step forward and 700 back as she learnt how to do business. Thirteen years on — over 2,700 awards written, seven Grand Stevies — she's still here.</p>
+    <p>Ironic for a kid who was always picked last for teams, and whose only award had been the Top Dog Award for Achievement at age seven.</p>
+    <p>The 2020s brought a sea-change move to the Gold Coast, trips to New York for the Stevie Awards, a campervan called Disco, almost 80kgs donated to somewhere it'll never find her again, a stint doing stand-up comedy, her memoir — <em>Darling: How to Eat a Shit Sandwich and Keep Smiling</em> — selling everything she owned, and a move to Bali.</p>
+    <p>Fifty-six years from the date her bum was whacked by the midwife in a Launceston hospital, she's lying in bed this morning, marvelling at the twisty, turny course of her life. She's grateful for the ups and downs, wins and losses, and the people she's met along the way — all of them, even the users, abusers, and midnight schmoozers — and wondering what other crazy stuff she can get up to.</p>
+    <div class="author-block">
+      <div>
+        <div class="author-name">Annette Densham</div>
+        <div class="author-role">Journalist · Storyteller · Founder, Award Writing Services</div>
+        <div class="author-bio">Annette Densham was 15 when she stepped into her first newsroom. Her first news story was about the local school fete. She was hooked. That was 40 years ago.<br><br>Her insatiable curiosity and love of talking to incredible humans has been the lodestone on which she's built a reputation as a storyteller and profile builder over the past decade. Working with small businesses and entrepreneurs, Annette uses her journalist's instincts to draw out people's stories, write compelling business awards, and build profiles using her Breadcrumb Method. Her work has been recognised by the 2024 Telstra Best of Business Awards, and she has won three Grand Stevie Awards over the past year, as well as Copywriter of the Year.</div>
+      </div>
+    </div>
+  `
+},
+
+{
+  type:'article',
+  eyebrow:"Mike Devlin's Recipes & Kitchen Hacks",
+  title:"That Dish Doesn't Come From Where You Think It Does",
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/june-2025-week-4-print-edition-7928490_1.webp?v=1756929318',
+  caption:'Hamburgers are German. Fish and chips is Jewish. The Caesar salad is Mexican. Let\u2019s sort the rest out.',
+  byline:'Mike Devlin', keepByline:false,
+  body:`
+    <p>Some dishes, or styles, are synonymous with a particular country. Haggis, for example, is definitely from Scotland, and rice is definitely from China. But what of other famous exports to the world? Some have been adapted — and then adopted — and now hail from somewhere else, while others have been just out-and-out stolen. Let's find out.</p>
+    <p><strong>American Hamburgers</strong> — forming minced meat into patties was a popular dish in late-19th-century Germany (from, yes, you guessed it, the town of Hamburg). It was only after being exported to the US that it ended up between two slices of bread.</p>
+    <p><strong>Pizza</strong> — is it American? Is it Italian? This battle has raged on and off for years, but both of these countries can calm down and keep quiet. Placing toppings on a flatbread-type substance has been done for centuries in the Middle East. Sure, it wasn't a pizza as we know it today, but it fits the dictionary definition.</p>
+    <p><strong>Chinese Fortune Cookies</strong> — many know this one, but if you didn't, it's an American thing. Possibly created by Chinese (maybe even Japanese) immigrants in California, but it definitely hails from the USA.</p>
+    <p><strong>Italian Spaghetti and Meatballs</strong> — Italians made it, but they created it in New York City, thereby making it an American dish.</p>
+    <p><strong>French Fries</strong> — remember when Americans were a bit upset with the French for some reason, and started calling them Freedom Fries? Fun times. They need not have bothered, because they actually come from Belgium.</p>
+    <p><strong>Japanese Sushi</strong> — it took a while for the process of fermenting fish to arrive in Japan (about a thousand years, in fact) from what is now Cambodia and Thailand. The Japanese perfected it, but they didn't invent it.</p>
+    <p><strong>French Croissants</strong> — the 'kipferl', a crescent-shaped pastry, was born in 13th-century Austria. It wasn't until the French got hold of it and added loads of butter that we got what we have today.</p>
+    <p><strong>Italian Caesar Salad</strong> — another dish created by a native of the country we all think it's from. We even have an actual date nailed down: 4 July 1924. Nope, not American — it was born in Mexico, after Caesar Cardini ran out of ingredients and had to make a sauce on the fly for his restaurant. You'd be pleasantly surprised at how many dishes have been created this way.</p>
+    <p><strong>Japanese Tempura Batter</strong> — Portuguese missionaries brought this to the shores of Japan in the 16th century, as they had been doing this back home for ages.</p>
+    <p><strong>British Battered Fish</strong> — speaking of which, the good old fish and chips isn't British, it's Jewish, and the practice has been around for about 500 years. The British added beer into the batter a couple of hundred years later, because of course they did.</p>
+    <p><strong>Italian Tomato Sauce</strong> — a bit of a cheat, this one, as tomatoes were not known in Europe at the time and had been imported from South America. Plus, the first recorded instance of tomato sauce comes from Spain. This one is virtually impossible to nail down — write in if you can add to this mystery.</p>
+    <p><strong>Japanese Katsu Curry</strong> — this one is convoluted. Katsu comes from British curry, which in turn comes from Indian curry, which in turn comes from the British invasion that made Indian curries what British curries are today, that Katsu comes from. Yeah, I think we just divided by zero.</p>
+    <p><strong>American Apple Pie</strong> — as the saying goes, "as American as apple pie", in actuality it's English. Oh dear.</p>
+    <p><strong>German Sauerkraut</strong> — long before Germany was actually Germany, the Chinese were fermenting cabbage. Suan cai is definitely not German.</p>
+    <p><strong>Swedish Meatballs</strong> — the Ottoman Empire came up with this, a variation of Turkish köfte, and it found its way to King Charles XII of Sweden whilst he was exiled from his homeland. He brought himself and this dish back home, and I suppose everyone was happy about it.</p>
+    <p><strong>American Hot Dog</strong> — just like the hamburger, hot dogs are German, hence why frankfurters are named after the German town. Oh, and wieners are from Austria. And, yes, Oscar Mayer was German.</p>
+    <p><strong>Belgian Waffles</strong> — the Greeks came up with these a few thousand years ago, although the word "waffle" comes from the Dutch word 'wafel', for the honeycomb pattern. Definitely not Belgian.</p>
+    <p><strong>Italian Pasta</strong> — it was Arab traders who brought this to Sicily in the 8th century. Durum wheat grows perfectly in the climate there, and it very quickly spread across the country.</p>
+    <div class="author-block">
+      <div>
+        <div class="author-name">Mike Devlin</div>
+        <div class="author-role">Chef · Author · Owner &amp; Co-Founder, DWC Magazine</div>
+        <div class="author-bio">Mike Devlin is a chef with over 30 years of experience in England, Germany and the USA.<br><br>For the last 10 years, he has also been a writer and author (<em>Smith</em>, and <em>Manchester City: The Secret History Of A Club That Has No History</em>), with two more books in the offing — a thriller, and a history book. When he isn't doing that, he also does artistry (including portraits and designing tattoos) and sculpts in his spare time, and watches tons of movies, football, and plays video games, that's if he isn't already in the pub.</div>
+      </div>
+    </div>
+  `
+},
+
+{
+  type:'podcast-section',
+  eyebrow:'Podcast Feature',
+  title:'Voices Worth Your Time',
+  caption:'Curated for women navigating midlife with intention. All shows open in Spotify.',
+  tiles:[
+    {name:'Soul Loom', host:'Michelle Wollaston', img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3O5yfktIwG1HJcYfV6hDwTzLOZAG5JBOe-sTT-AwKvulJWRpyA60JOc39uYY&s', link:'https://open.spotify.com/show/5qSCUQm4zPcWZY5dkWoFe5'},
+    {name:'Pleasure Uprising', host:'Dr Laura Jurgens', img:'https://laurajurgens.com/wp-content/uploads/2026/04/Copy-of-Copy-of-SHSP-Show-Art-3-scaled.webp', link:'https://open.spotify.com/show/0SfpVI3oXn4Tk3zh3xCisf'},
+    {name:'The Infinite Life', host:'Katische Dionne Haberfield', img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzA7V-iWB9IQU2gzwQ8hkx1G6yw6ou91YVUj2b-uCB1YFs-ur7Rf-kUxJkgg&s', link:'https://open.spotify.com/show/4nRLNxlzZWziRsDM1d0BiZ'},
+    {name:'Voices of Vision. Stories of Soul.', host:'Kathryn Toomey', img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCqM2hpIdM3ccMgJ1ph0lXSFDiCmQyHz_uxqBOR-O-o7DB3bycOBy8dQ30xA&s', link:'https://open.spotify.com/show/5KONprJFpjK6nj9DfxHV28'}
+  ]
+},
+
+{
+  type:'mercury',
+  eyebrow:'Freebie · Michelle Wollaston',
+  title:'Mercury Retrograde',
+  image:'https://cdn.shopify.com/s/files/1/0703/3022/0765/files/Untitled_design_6.jpg?v=1782456709',
+  caption:'"Ugh, Mercury\u2019s in retrograde again\u2026" But what does that actually mean?',
+  byline:'Michelle Wollaston', keepByline:false,
+  bodyTop:`
+    <p>I had an important meeting over Zoom, the kind you don't want to mess up. And of course… it wouldn't connect.</p>
+    <p>Frustrated, I muttered, "for fu*k's sake", thinking I was on mute. Apparently, I wasn't — because someone in the meeting laughed and simply said, "Mercury retrograde".</p>
+    <p>Cue the eye roll.</p>
+    <p>But after the moment passed, I realised — they weren't wrong. We throw the phrase around like it's a cosmic excuse for chaos… but do we really understand what it means? Because this current Mercury retrograde isn't just stirring up tech issues — it's stirring something deeper.</p>
+    <h4>What Is Mercury Retrograde?</h4>
+    <p>Astronomically, Mercury retrograde is an optical illusion. From Earth's perspective, Mercury appears to move backward in the sky as we pass it in orbit. It's not actually reversing — it's just doing a bit of celestial backtracking.</p>
+    <p>Astrologically? That "backward" motion has a very real energetic impact. Mercury rules communication, travel, decision-making, contracts, thoughts, and technology. So when it slows down, it can feel like the universe is handing you a sticky note that reads: <em>Pause. Don't push. Rethink this.</em></p>
+    <h4>The Cancer → Gemini Shift: From Feeling to Thinking</h4>
+    <p>This current cycle began in Cancer, a sign ruled by the Moon. Cancer energy is nurturing, protective, and deeply attuned to emotional safety. When Mercury retrogrades in Cancer, we start questioning whether we feel safe, supported, and truly at home.</p>
+    <p>Then, midway through the cycle, Mercury dips back into Gemini, shifting the entire tone. Where Cancer asks, "Do I feel safe?", Gemini asks, "Am I actually saying what I mean?"</p>
+    <h4>Retrograde Isn't a Problem — It's a Portal</h4>
+    <p>We tend to treat Mercury retrograde like a disruption to dodge. But it's actually a mirror. It might slow you down, but that's not punishment. That's protection.</p>
+    <p class="retro-transition">Feeling it already? Flip through a few cards below to see if Mercury's behind it — then tick off the checklist to steady yourself through the rest of the cycle.</p>
+  `,
+  flipCards:[
+    {front:"Your flight got delayed... again.", back:"Yep, that's Mercury. Pack a book, not a grudge."},
+    {front:"You re-read your message and panicked.", back:"Mercury's making you question every full stop. Send it anyway."},
+    {front:'Your ex texted "hey stranger 👋"', back:"Mercury loves a plot twist. You don't have to reply."},
+    {front:"Your Wi-Fi died mid-Zoom call.", back:"Not your router. It's Mercury. Mute, breathe, reconnect."},
+    {front:"You found yourself rereading old chats from months ago.", back:"Mercury's pulling you backward on purpose — closure, not chaos."},
+    {front:"You signed up for something then instantly regretted it.", back:"Classic retrograde impulse. Sleep on it before you commit further."}
+  ],
+  checklist:[
+    'Back up your phone before you "accidentally" lose three years of photos arguing with a software update',
+    "Read that text twice before you hit send — Mercury's listening",
+    'Resist the urge to message your ex "just to check in"',
+    "Don't sign anything that wants your signature in your best handwriting",
+    "Confirm the flight. Then confirm it again",
+    "Walk away from the online basket for 24 hours before you buy the thing",
+    "If the Wi-Fi's arguing with you, it's not you — it's Mercury",
+    "Let an old disagreement sit for a few more days before you reopen it",
+    "Say the awkward thing out loud instead of leaving it to fester in a draft",
+    "Treat today's \"final decision\" as next week's first draft"
+  ],
+  bodyBottom:`
+    <h4>Stay Grounded Through These Shifts</h4>
+    <p>This cycle runs until 23 July 2026, and there's one more cycle before the year is out — in Scorpio, from 24 October to 13 November.</p>
+    <p>Retrograde doesn't have to derail you — it can realign you.</p>
+  `
+}
+
+];
+
+const feed = document.getElementById('feed');
+
+function renderByline(item){
+  return item.keepByline ? `<div class="card-byline">${item.byline}</div>` : '';
+}
+
+function attachPull(card, body, inner, label){
+  const affordance = card.querySelector('.pull-affordance');
+  affordance.addEventListener('click', () => {
+    const isOpen = card.classList.contains('open');
+    if(isOpen){
+      card.classList.remove('open');
+      body.style.maxHeight = '0px';
+      label.textContent = 'Tap to read';
+    } else {
+      card.classList.add('open');
+      body.style.maxHeight = inner.scrollHeight + 80 + 'px';
+      label.textContent = 'Tap to close';
+    }
+  });
+}
+
+ITEMS.forEach((item) => {
+
+  if(item.type === 'podcast-section'){
+    const sec = document.createElement('div');
+    sec.className = 'card';
+    sec.innerHTML = `
+      <div class="card-eyebrow">${item.eyebrow}</div>
+      <div class="card-title">${item.title}</div>
+      <div class="card-caption" style="padding-bottom:14px;">${item.caption}</div>
+      <div class="podcast-grid">
+        ${item.tiles.map(t => `
+          <div class="podcast-tile">
+            <img src="${t.img}" alt="${t.name}">
+            <div class="podcast-name">${t.name}</div>
+            <div class="podcast-host">${t.host}</div>
+            <a class="podcast-link" href="${t.link}" target="_blank" rel="noopener">Listen on Spotify →</a>
+          </div>
+        `).join('')}
+      </div>
+      <div style="height:18px;"></div>
+    `;
+    feed.appendChild(sec);
+    return;
+  }
+
+  if(item.type === 'nominees'){
+    const sec = document.createElement('div');
+    sec.className = 'card';
+    sec.innerHTML = `
+      <div class="card-eyebrow">${item.eyebrow}</div>
+      <div class="card-title">${item.title}</div>
+      <div class="card-caption" style="padding-bottom:16px;">${item.caption}</div>
+      <div style="padding:0 20px 20px;">
+        ${item.nominees.map(n => `
+          <div class="nominee-card">
+            <div class="nominee-photo-wrap"><img src="${n.photo}" alt="${n.name}"></div>
+            <div style="flex:1;min-width:0;">
+              <div class="nominee-name">${n.name}</div>
+              <div class="nominee-cat">${n.category}</div>
+              <div class="nominee-bio">${n.bio}</div>
+              <div class="nominee-footer">
+                <a class="nominee-link" href="${n.url}" target="_blank" rel="noopener">${n.channel} →</a>
+                <button class="vote-btn" id="vbtn-${n.id}" onclick="DWCAwards.vote(${n.id}, this)">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 13.5S2 9.5 2 5.5A3.5 3.5 0 0 1 8 3.2 3.5 3.5 0 0 1 14 5.5C14 9.5 8 13.5 8 13.5Z"/></svg>
+                  <span id="vcount-${n.id}">${n.seedVotes}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    feed.appendChild(sec);
+
+    try{
+      if(!firebase.apps.length){
+        firebase.initializeApp({
+          apiKey:"AIzaSyC1k5zbSCNGeoSb6CVDy3YASB-3SrMIfu0",
+          authDomain:"dwc-magazine.firebaseapp.com",
+          databaseURL:"https://dwc-magazine-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId:"dwc-magazine",
+          storageBucket:"dwc-magazine.firebasestorage.app",
+          messagingSenderId:"851615038375",
+          appId:"1:851615038375:web:5788b93fea369068499482"
+        });
+      }
+      const db = firebase.database();
+      const votedIds = new Set(JSON.parse(localStorage.getItem('dwc_awards_voted')||'[]'));
+      item.nominees.forEach(n=>{
+        if(votedIds.has(n.id)){
+          const b=document.getElementById('vbtn-'+n.id);
+          if(b) b.classList.add('voted');
+        }
+        db.ref('awards2026/votes/'+n.id).on('value', snap=>{
+          const live = snap.val()||0;
+          const count = Math.max(live, n.seedVotes);
+          const el = document.getElementById('vcount-'+n.id);
+          if(el) el.textContent = count;
+        });
+      });
+      window.DWCAwards = {
+        vote: function(id, btn){
+          if(votedIds.has(id)) return;
+          votedIds.add(id);
+          localStorage.setItem('dwc_awards_voted', JSON.stringify([...votedIds]));
+          btn.classList.add('voted');
+          db.ref('awards2026/votes/'+id).transaction(c=>(c||0)+1);
+        }
+      };
+    }catch(e){ console.warn('Awards voting unavailable', e); }
+    return;
+  }
+
+  if(item.type === 'mercury'){
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-eyebrow">${item.eyebrow}</div>
+      <div class="card-title">${item.title}</div>
+      <div class="card-image-wrap"><img src="${item.image}" alt="${item.title}" loading="lazy"></div>
+      <div class="card-caption">${item.caption}</div>
+      ${renderByline(item)}
+      <div class="pull-affordance">
+        <div class="pull-label">Tap to read</div>
+        <div class="pull-chevron"></div>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        ${item.bodyTop}
+        <div class="flip-grid">
+          ${item.flipCards.map((c,i)=>`
+            <div class="flip-card" id="flip-${i}">
+              <div class="flip-card-inner">
+                <div class="flip-face flip-front"><p>${c.front}</p><span class="flip-tap">Tap to flip</span></div>
+                <div class="flip-face flip-back"><p>${c.back}</p></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="checklist">
+          ${item.checklist.map((c,i)=>`
+            <div class="check-item" id="chk-${i}">
+              <div class="check-box"></div>
+              <div class="check-text">${c}</div>
+            </div>
+          `).join('')}
+        </div>
+        ${item.bodyBottom}
+      </div></div>
+    `;
+    feed.appendChild(card);
+    const body = card.querySelector('.card-body');
+    const inner = card.querySelector('.card-body-inner');
+    const label = card.querySelector('.pull-label');
+    attachPull(card, body, inner, label);
+
+    item.flipCards.forEach((_,i)=>{
+      document.getElementById('flip-'+i).addEventListener('click', function(){
+        this.classList.toggle('flipped');
+        if(card.classList.contains('open')) body.style.maxHeight = inner.scrollHeight + 80 + 'px';
+      });
+    });
+    item.checklist.forEach((_,i)=>{
+      document.getElementById('chk-'+i).addEventListener('click', function(){
+        this.classList.toggle('checked');
+      });
+    });
+    return;
+  }
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-eyebrow">${item.eyebrow}</div>
+    <div class="card-title">${item.title}</div>
+    <div class="card-image-wrap"><img src="${item.image}" alt="${item.title}" loading="lazy"></div>
+    <div class="card-caption">${item.caption}</div>
+    ${renderByline(item)}
+    <div class="pull-affordance">
+      <div class="pull-label">Tap to read</div>
+      <div class="pull-chevron"></div>
+    </div>
+    <div class="card-body"><div class="card-body-inner">${item.body}</div></div>
+  `;
+  feed.appendChild(card);
+
+  const body = card.querySelector('.card-body');
+  const inner = card.querySelector('.card-body-inner');
+  const label = card.querySelector('.pull-label');
+  attachPull(card, body, inner, label);
+});
+</script>
+</body>
+</html>
