@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.dwcmagazine.app",
+        "sha256_cert_fingerprints": ["D9:30:54:B4:51:79:43:46:0A:E6:C4:F2:DD:B6:53:FF:92:B5:14:3E:B8:5E:E4:78:FA:B5:CF:60:B7:0B:DA:B2"]
+      }
+    }]
